@@ -10,6 +10,12 @@
   --accent-soft: hsla(var(--accent-hue), 100%, 58%, .15);
   --shadow: 0 10px 30px rgba(0,0,0,.5), 0 0 40px hsla(var(--accent-hue), 100%, 60%, .25);
   --radius: 18px;
+  --bg-dark: #0b0c10;
+      --text-light: #f9f9f9;
+      --glow-cyan: 0 0 10px rgba(0,255,255,0.7);
+      --glow-purple: 0 0 10px rgba(200, 100, 255, 0.7);
+      --accent-cyan: #00f7ff;
+      --accent-purple: #a66cff;
 }
 
 *{box-sizing:border-box}
@@ -216,14 +222,106 @@ img,video{max-width:100%; display:block}
 #term-close{margin-left:auto; background:transparent; border:0; color:var(--text); font-size:22px; cursor:pointer}
 
 /* Responsive */
-@media (max-width: 980px){
+@media (max-width: 500px){
   .cards{grid-template-columns:1fr}
   .about-grid{grid-template-columns:1fr}
   .play-grid{grid-template-columns:1fr 1fr}
   .nav .links{display:none}
   .burger{display:block}
 }
-@media (max-width: 560px){
+@media (max-width: 300px){
   .play-grid{grid-template-columns:1fr}
   .cta-row{flex-direction:column}
 }
+  .about {
+      min-height:100vh;
+      padding:6rem 1rem 2rem;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .about h2 {
+      font-size:2rem; margin-bottom:2rem;
+      color:var(--accent-purple);
+      text-shadow: var(--glow-purple);
+    }
+    .about__icons {
+      position:relative; min-height:350px;
+    }
+    /* Sun */
+    .sun {
+      width:120px; height:120px;
+      border-radius:50%;
+      margin:auto;
+      background: radial-gradient(circle at center, #ffd27f, #ff9800 70%, #ff4500 100%);
+      box-shadow: 0 0 40px rgba(255,150,0,0.9);
+      position:relative; z-index:2;
+    }
+    /* Lens flare */
+    .sun::after {
+      content:""; position:absolute; inset:-40%;
+      border-radius:50%;
+      background: radial-gradient(circle, rgba(255,200,150,0.15), transparent 70%);
+      animation: spin 12s linear infinite;
+    }
+    @keyframes spin { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+
+    /* Orbits */
+    .orbit {
+      position:absolute; top:50%; left:50%;
+      transform:translate(-50%, -50%);
+      width:350px; height:350px;
+      border:1px dashed rgba(255,255,255,0.1);
+      border-radius:50%;
+      animation: rotateOrbit 40s linear infinite;
+    }
+    @keyframes rotateOrbit { from{transform:translate(-50%,-50%) rotate(0)} to{transform:translate(-50%,-50%) rotate(360deg)} }
+
+    .planet {
+      width:60px; height:60px; border-radius:50%;
+      position:absolute; top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      font-size:.8rem; font-weight:bold;
+      color:#111;
+      box-shadow:0 0 12px rgba(255,255,255,0.3);
+      transition:transform .3s;
+    }
+    .planet:hover { transform:translate(-50%,-50%) scale(1.2); z-index:3; }
+
+    .planet.html { background:#ffd7d7; transform:translate(-180px,-50%); }
+    .planet.css  { background:#d7e9ff; transform:translate(180px,-50%); }
+    .planet.js   { background:#fff3bf; transform:translate(-50%,-180px); }
+    .planet.php  { background:#dfd7ff; transform:translate(-50%,180px); }
+
+    /* Stars background */
+    .stars {
+      position:absolute; inset:0;
+      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'><circle cx='12' cy='12' r='1' fill='white' opacity='0.8'/></svg>");
+      background-repeat:repeat;
+      background-size:24px 24px;
+      opacity:0.2;
+      animation: twinkle 3s infinite alternate;
+      z-index:0;
+    }
+    @keyframes twinkle { from{opacity:0.1} to{opacity:0.3} }
+    /* Modal */
+    .modal {
+      position:fixed; inset:0;
+      background:rgba(0,0,0,0.8);
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; pointer-events:none; transition:.3s;
+      z-index:2000;
+    }
+    .modal.show { opacity:1; pointer-events:auto; }
+    .modal-content {
+      background:#111; padding:2rem; border-radius:1rem;
+      max-width:400px; color:var(--text-light);
+      text-align:left;
+      box-shadow: var(--glow-purple);
+    }
+    .modal-content h3 { margin-bottom:1rem; color:var(--accent-cyan); }
+    .modal-close {
+      float:right; cursor:pointer; font-size:1.5rem; color:var(--accent-purple);
+    }
