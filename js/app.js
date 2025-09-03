@@ -423,3 +423,26 @@ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
   // Turn down particle count
   window.removeEventListener('mousemove', ()=>{});
 }
+
+// Skills modal
+    const skills={
+      html:{title:"HTML5",desc:"Markup language for structuring content. Experienced in semantic HTML, forms, SEO-friendly tags."},
+      css:{title:"CSS3",desc:"Styling with animations, responsive layouts, Flexbox, Grid, and modern design techniques."},
+      js:{title:"JavaScript",desc:"Dynamic client-side scripting. Comfortable with ES6+, DOM manipulation, APIs, and frameworks."},
+      php:{title:"PHP",desc:"Server-side scripting. Experience with MySQL integration, authentication, and full-stack solutions."}
+    };
+    const modal=document.getElementById('skillModal');
+    const modalTitle=document.getElementById('skillTitle');
+    const modalDesc=document.getElementById('skillDescription');
+    const modalClose=document.querySelector('.modal-close');
+
+    document.querySelectorAll('.planet').forEach(planet=>{
+      planet.addEventListener('click',()=>{
+        const key=planet.dataset.skill;
+        modalTitle.textContent=skills[key].title;
+        modalDesc.textContent=skills[key].desc;
+        modal.classList.add('show');
+      });
+    });
+    modalClose.addEventListener('click',()=>modal.classList.remove('show'));
+    modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('show'); });
